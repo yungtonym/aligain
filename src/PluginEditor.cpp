@@ -38,6 +38,8 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     gainSlider.setNumDecimalPlacesToDisplay(2); //???
     gainSlider.setTextValueSuffix(" dB");
     addAndMakeVisible(gainSlider);
+    gainSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+        processorRef.parameters, "gain", gainSlider);
 }
 
 AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor()
@@ -69,10 +71,10 @@ void AudioPluginAudioProcessorEditor::resized()
     gainSlider.setBounds(area.reduced(60));
 }
 
-void AudioPluginAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
-{
-    if (slider == &gainSlider)
-    {
-        processorRef.rawVolume = pow(10, gainSlider.getValue() / 20);
-    }
-}
+// void AudioPluginAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
+// {
+//     if (slider == &gainSlider)
+//     {
+//         processorRef.rawVolume = pow(10, gainSlider.getValue() / 20);
+//     }
+// }

@@ -4,8 +4,8 @@
 #include "AliLookAndFeel.h"
 
 //==============================================================================
-class AudioPluginAudioProcessorEditor final : public juce::AudioProcessorEditor,
-                                              public juce::Slider::Listener
+class AudioPluginAudioProcessorEditor final : public juce::AudioProcessorEditor
+                                              // public juce::Slider::Listener
 {
 public:
     //==============================================================================
@@ -15,7 +15,7 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
-    void sliderValueChanged(juce::Slider *slider) override;
+    // void sliderValueChanged(juce::Slider *slider) override;
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -25,6 +25,8 @@ private:
 
     juce::Slider gainSlider;
     juce::Label titleLabel;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> gainSliderAttachment;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessorEditor)
 };

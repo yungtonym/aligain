@@ -11,8 +11,11 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
                        ),
-        rawVolume(0.5f)
+        // rawVolume(0.5f)
+        parameters(*this, nullptr, "Parameters", createParameterLayout())
+
 {
+    rawVolume = parameters.getRawParameterValue("gain");
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor()
@@ -21,6 +24,22 @@ AudioPluginAudioProcessor::~AudioPluginAudioProcessor()
 
 //==============================================================================
 
+juce::AudioProcessorValueTreeState::ParameterLayout AudioPluginAudioProcessor::createParameterLayout()
+{
+    std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
+
+    auto gainParam = std::make_unique<juce::AudioParameterFloat>(
+        "gain",
+        "Gain",
+        -48.0f,
+        15.0f,
+        0.0f
+        );
+
+    params.push_back(std::move(gainParam));
+
+    return { params.begin(), params.end() };
+}
 
 const juce::String AudioPluginAudioProcessor::getName() const
 {
@@ -134,6 +153,8 @@ void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     // rawVolume = 0.5;
+    auto volume = rawVolume->load();
+    auto finalVolume = pow(10, volume / 20);
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
@@ -151,7 +172,7 @@ void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 
         for(int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
-            channelData[sample] = buffer.getSample(channel, sample) * rawVolume;
+            channelData[sample] = buffer.getSample(channel, sample) * finalVolume;
         }
     }
 }

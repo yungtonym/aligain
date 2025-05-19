@@ -15,9 +15,9 @@ void AliLookAndFeel::drawLinearSlider (juce::Graphics& g, int x, int y, int widt
                       float sliderPos, float minSliderPos, float maxSliderPos,
                       juce::Slider::SliderStyle style, juce::Slider& slider)
 {
-    auto trackWidth = 6.0f;
-    auto thumbHeight = 40.0f;
-    auto thumbWidth = 25.0f;
+    auto trackWidth = 10.0f;
+    auto thumbHeight = 50.0f;
+    auto thumbWidth = 30.0f;
     sliderPos = juce::jlimit(y + thumbHeight / 2.0f, y + height - thumbHeight / 2.0f, sliderPos);
 
     g.setColour(this->findColour(juce::Slider::trackColourId));

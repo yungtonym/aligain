@@ -31,8 +31,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout AudioPluginAudioProcessor::c
     auto gainParam = std::make_unique<juce::AudioParameterFloat>(
         "gain",
         "Gain",
+        // juce::NormalisableRange<float>(-48.0f, 24.0f, 0.01f, 0.5),
         -48.0f,
-        15.0f,
+        24.0f,
         0.0f
         );
 

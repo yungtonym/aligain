@@ -30,12 +30,12 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
 
 
     gainSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
-    gainSlider.setRange(-48, 15);
+    // gainSlider.setRange(-48, 15);
     // gainSlider.setValue(0.0);
     gainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 100, 25);
     // gainSlider.addListener(this);
     gainSlider.setLookAndFeel(&defaultLookAndFeel);
-    gainSlider.setNumDecimalPlacesToDisplay(2); //???
+    // gainSlider.setNumDecimalPlacesToDisplay(2); //???
     gainSlider.setTextValueSuffix(" dB");
     addAndMakeVisible(gainSlider);
     gainSliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
